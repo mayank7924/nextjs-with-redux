@@ -1,19 +1,21 @@
-import Link from 'next/link'
-import { connect } from 'react-redux'
-import Clock from './Clock'
-import AddCount from './AddCount'
+import Link from "next/link";
+import Users from "./Users";
+import AddCount from "./IncrementCounter";
 
-const Page = ({ title, linkTo, tick }) => (
-  <div>
-    <h1>{title}</h1>
-    <Clock lastUpdate={tick.lastUpdate} light={tick.light} />
-    <AddCount />
-    <nav>
-      <Link href={linkTo}>
-        <a>Navigate</a>
-      </Link>
-    </nav>
-  </div>
-)
+const Page = (props) => {
+  return (
+    <div>
+      <h1 style={{backgroundColor: "#ddd"}}>{props.title}</h1>
+      <Users/>
+      <AddCount />
+      <br/>
+      <nav>
+        <Link href={props.linkTo}>
+          <a>Navigate</a>
+        </Link>
+      </nav>
+    </div>
+  );
+};
 
-export default connect((state) => state)(Page)
+export default Page;

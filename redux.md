@@ -1,0 +1,6 @@
+- Redux is a state management library
+- In React you only have client side redux stores
+- In Next.JS you can also fetch data on server side during SSR
+- We create a new server side redux store in such cases and update it with fetched data
+- HYDRATE action from next-redux-wrapper is triggered in such cases
+- While handling HYDRATE action we need to apply the new store values to the client store

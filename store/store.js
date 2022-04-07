@@ -1,37 +1,36 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { HYDRATE, createWrapper } from 'next-redux-wrapper'
-import thunkMiddleware from 'redux-thunk'
-import count from './count/reducer'
-import tick from './tick/reducer'
-
-const bindMiddleware = (middleware) => {
-  if (process.env.NODE_ENV !== 'production') {
-    const { composeWithDevTools } = require('redux-devtools-extension')
-    return composeWithDevTools(applyMiddleware(...middleware))
-  }
-  return applyMiddleware(...middleware)
-}
+import { composeWithDevTools } from 'redux-devtools-extension'
+import users from './users/reducer'
+import counter from './counter/reducer'
 
 const combinedReducer = combineReducers({
-  count,
-  tick,
+  counter,
+  users,
 })
 
-const reducer = (state, action) => {
+const masterReducer = (state, action) => {
   if (action.type === HYDRATE) {
     const nextState = {
-      ...state, // use previous state
-      ...action.payload, // apply delta from hydration
+      ...state,
+      counter: {
+        count: state.counter.count + action.payload.counter.count
+      },
+      users: {
+        users: [...new Set([...action.payload.users.users, ...state.users.users])]
+      }
     }
-    if (state.count.count) nextState.count.count = state.count.count // preserve count value on client side navigation
     return nextState
-  } else {
-    return combinedReducer(state, action)
+  }
+  else {
+    return combinedReducer(state, action);
   }
 }
 
 const initStore = () => {
-  return createStore(reducer, bindMiddleware([thunkMiddleware]))
+  return createStore(masterReducer, composeWithDevTools(
+    applyMiddleware()
+  ))
 }
 
 export const wrapper = createWrapper(initStore)

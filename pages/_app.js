@@ -1,7 +1,7 @@
 import { wrapper } from '../store/store'
 
-const WrappedApp = ({ Component, pageProps }) => {
+const App = ({ Component, pageProps }) => {
   return <Component {...pageProps} />
 }
 
-export default wrapper.withRedux(WrappedApp)
+export default wrapper.withRedux(App)

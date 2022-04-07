@@ -1,33 +1,18 @@
-import { useEffect } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import Page from '../components/Page'
-import { addCount } from '../store/count/action'
-import { wrapper } from '../store/store'
-import { serverRenderClock, startClock } from '../store/tick/action'
+import Page from "../components/Page";
+import { wrapper } from "../store/store";
+import { incrementCounter } from "../store/counter/action";
+import { addUser } from '../store/users/action';
 
 const Other = (props) => {
-  useEffect(() => {
-    const timer = props.startClock()
+  return <Page title="Other Page" linkTo="/" />;
+};
 
-    return () => {
-      clearInterval(timer)
-    }
-  }, [props])
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+  store.dispatch(incrementCounter());
+  
+  const response = await fetch(`https://reqres.in/api/users/${Math.floor(Math.random() * (10) + 1)}`);
+  const {data} = await response.json();
+  store.dispatch(addUser(`${data.first_name} ${data.last_name}`))
+});
 
-  return <Page title="Other Page" linkTo="/" />
-}
-
-export const getServerSideProps = wrapper.getServerSideProps((store) => () => {
-  store.dispatch(serverRenderClock(true))
-  store.dispatch(addCount())
-})
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addCount: bindActionCreators(addCount, dispatch),
-    startClock: bindActionCreators(startClock, dispatch),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(Other)
+export default Other;
