@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../store/users/action";
+import { addUser } from "../store/usersSlice";
 
 export default function Clock() {
-  const dispatch = useDispatch();
-  const { users } = useSelector((state) => state.users);
   const [name, setName] = useState("");
-
+  const { users } = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+  
   const addNewUser = () => {
     dispatch(addUser(name));
   };
