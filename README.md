@@ -1,3 +1,4 @@
+
 # With Redux Wrapper Example
 
 Usually splitting your app state into `pages` feels natural but sometimes you'll want to have global state for your app.
@@ -19,3 +20,10 @@ for running prod like server: npm run build, npm run start
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+
+## NOTE: There are three projects present in this repo in separate branches
+    main: redux with Next.JS
+      |-starter-project: starter Next.JS app
+      |-redux-toolkit: redux-toolkit wuth Next.JS
+
+
