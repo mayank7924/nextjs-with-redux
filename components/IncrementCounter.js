@@ -1,15 +1,12 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 
 const IncrementCounter = () => {
-  const dispatch = useDispatch()
-  const counter = useSelector((state) => state.counter.count)
   return (
     <div>
       <h1>
-        Counter: <span>{counter}</span>
+        Counter: <span>{0}</span>
       </h1>
-      <button onClick={() => dispatch({ type: 'INCREMENT' })}>Add To Count</button>
+      <button>Add To Count</button>
     </div>
   )
 }

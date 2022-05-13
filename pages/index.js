@@ -1,22 +1,20 @@
 import Page from '../components/Page'
-import { incrementCounter } from '../store/counter/action'
-import { wrapper } from '../store/store'
+import getConfig from 'next/config'
+
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+console.log(serverRuntimeConfig)
+console.log(publicRuntimeConfig)
 
 const Index = (props) => {
-  console.log("AUTHOR", process.env.AUTHOR)
-  // console.log("client side:", process.env.NEXT_PUBLIC_APP_NAME)
   return <Page title="Index Page" linkTo="/other" />
 }
 
-export const getServerSideProps = async (req, res) => {
+export const getServerSideProps = async () => {
   //fetch props
-  // console.log("server side:",process.env.APP_NAME)
-  console.log("AUTHOR", process.env.AUTHOR)
-  console.log(req)
-  const userDetails = await fetch(process.env.USER_ENDPOINT)
+  const userDetails = await fetch(serverRuntimeConfig.userEndpoint)
     .then( data => data.json())
     .then( user => user.data )
-  // console.log(userDetails)
+  console.log(userDetails)
   return { props: {} };
 };
 
